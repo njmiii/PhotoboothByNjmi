@@ -48,7 +48,6 @@ function adjustCanvasSize() {
 
 filterSelect.addEventListener('change', function () {
   selectedFilter = filterSelect.value;
-  video.style.filter = selectedFilter;
 });
 
 timerSelect.addEventListener('change', function () {
@@ -78,7 +77,7 @@ document.getElementById('snap').addEventListener('click', function () {
       ctx.restore();
       
       let imgData = canvas.toDataURL('image/png');
-      photos.push({ imgData });
+      photos.push({ imgData, filter: selectedFilter });
       updateGallery();
     }
   }, 1000);
@@ -92,6 +91,7 @@ function updateGallery() {
 
     const img = document.createElement('img');
     img.src = photo.imgData;
+    img.style.filter = photo.filter;
 
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'Hapus';
@@ -126,6 +126,7 @@ document.getElementById('combine').addEventListener('click', function () {
     img.src = photo.imgData;
     img.onload = function () {
       combinedCtx.save();
+      combinedCtx.filter = photo.filter;
       combinedCtx.drawImage(img, borderSize, yOffset, imgWidth, imgHeight);
       combinedCtx.restore();
       yOffset += imgHeight + borderSize;
