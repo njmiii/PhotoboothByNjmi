@@ -30,9 +30,7 @@ colors.forEach((color) => {
 });
 
 navigator.mediaDevices
-  .getUserMedia({
-    video: { facingMode: 'user' },
-  })
+  .getUserMedia({ video: { facingMode: 'user' } })
   .then((stream) => {
     video.srcObject = stream;
     video.playsInline = true;
@@ -69,18 +67,18 @@ document.getElementById('snap').addEventListener('click', function () {
     if (timeLeft <= 0) {
       clearInterval(timer);
       countdown.style.display = 'none';
-
+      
       adjustCanvasSize();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       ctx.save();
       ctx.filter = selectedFilter;
+      ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
-      ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       ctx.restore();
-
+      
       let imgData = canvas.toDataURL('image/png');
-      photos.push({ imgData, filter: selectedFilter });
+      photos.push({ imgData });
       updateGallery();
     }
   }, 1000);
@@ -94,7 +92,6 @@ function updateGallery() {
 
     const img = document.createElement('img');
     img.src = photo.imgData;
-    img.style.filter = photo.filter;
 
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'Hapus';
@@ -129,7 +126,6 @@ document.getElementById('combine').addEventListener('click', function () {
     img.src = photo.imgData;
     img.onload = function () {
       combinedCtx.save();
-      combinedCtx.filter = photo.filter;
       combinedCtx.drawImage(img, borderSize, yOffset, imgWidth, imgHeight);
       combinedCtx.restore();
       yOffset += imgHeight + borderSize;
@@ -145,8 +141,8 @@ document.getElementById('combine').addEventListener('click', function () {
 
 document.getElementById('download').addEventListener('click', function () {
   let link = document.createElement('a');
-  link.download = 'photobooth_result.png';
-  link.href = combinedCanvas.toDataURL('image/png');
+  link.download = 'PhotoboothByNjmi.jpg';
+  link.href = combinedCanvas.toDataURL('image/jpg');
   link.click();
 });
 
