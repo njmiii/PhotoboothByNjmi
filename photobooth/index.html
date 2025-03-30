@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photobooth By Njmi</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jersey+20&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Photobooth By njmi</h1>
+    <div id="video-container">
+      <video id="video" width="640" height="480" autoplay></video>
+      <div id="countdown"></div>
+    </div>
+    <h3>Set Timer:</h3>
+    <select id="timer">
+      <option value="0">Tanpa Timer</option>
+      <option value="3">3 Detik</option>
+      <option value="5">5 Detik</option>
+      <option value="10">10 Detik</option>
+    </select>
+
+    <div id="controls">
+      <button id="snap" class="shutter"><img src="/assets/shutter.png" alt="" height="50px" /></button><br />
+      <h3>Select Camera Effect:</h3>
+      <select id="filter">
+        <option value="none">Normal</option>
+        <option value="grayscale(100%)">Hitam Putih</option>
+        <option value="sepia(100%)">Sepia</option>
+        <option value="invert(100%)">Inversi Warna</option>
+        <option value="blur(5px)">Blur</option>
+      </select>
+
+      <h3>Select Border Color:</h3>
+      <div class="color-palette" id="colorPalette"></div>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+    <div id="gallery-controls">
+      <button id="clear">Delete All</button>
+      <button id="combine">Combine Photos</button>
+    </div>
+    <h2>Preview</h2>
+    <button id="download">Download Photo</button>
+    <div id="combinedGallery"></div>
+
+    <canvas id="canvas" width="640" height="480" style="display: none"></canvas>
+    <canvas id="combinedCanvas"></canvas>
+
+    <script src="script.js"></script>
+  </body>
+</html>
