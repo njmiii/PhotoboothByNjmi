@@ -70,7 +70,6 @@ button:hover {
   display: none;
 }
 
-
 .color-palette {
   display: flex;
   justify-content: center;
@@ -87,7 +86,6 @@ button:hover {
 
 .shutter {
   background: transparent;
-  
 }
 #combinedCanvas {
   display: none;
@@ -119,6 +117,34 @@ button:hover {
   background: darkred;
 }
 
+.sticker-palette {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.sticker-option {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.sticker-option:hover {
+  transform: scale(1.1);
+  border-color: #0052aa;
+}
+
+#combinedPreview {
+  display: block;
+  margin: 20px auto;
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 
 @media (max-width: 768px) {
   button {
