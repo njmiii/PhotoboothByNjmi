@@ -271,3 +271,14 @@ document.getElementById('removeSticker').addEventListener('click', function () {
   }
 });
 // hapus stiker end
+
+const targetRatio = 4 / 3;
+let actualRatio = video.videoWidth / videoHeight;
+
+if (actualRatio > targetRatio) {
+  canvas.height = video.videoHeight;
+  canvas.width = video.videoHeight * targetRatio;
+} else {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoWidth / targetRatio;
+}
