@@ -1,0 +1,37 @@
+/* Mobile Responsive Styles */
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  .app-layout {
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2.2em; /* Smaller title */
+    margin-bottom: 1rem;
+  }
+
+  .brand-sub-title {
+    font-size: 1.2rem; /* Adjusted sub-brand size */
+  }
+
+  .main-content {
+    gap: 1rem;
+  }
+
+  .camera-container {
+    gap: 1rem;
+  }
+
+  .video-wrapper {
+    border-radius: 12px; /* Slightly smaller radius */
+  }
+
+  .preview-sidebar {
+    padding: 0.5rem; /* Less padding on sidebar */
+  }
+}

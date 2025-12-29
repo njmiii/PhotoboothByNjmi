@@ -1,1 +1,34 @@
 /* Cleared default styles */
+
+.app-branding {
+    display: inline-flex;
+    /* Container width matches title width */
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto 1.5rem auto;
+    /* Center the container itself */
+    line-height: 1;
+}
+
+.brand-main-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    margin: 0;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.brand-sub-title {
+    font-family: '', cursive;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    align-self: flex-end;
+    /* Align specifically under the H */
+    margin-top: -0.2rem;
+    padding-right: 0.2rem;
+    /* Minor adjustment to look perfect */
+}

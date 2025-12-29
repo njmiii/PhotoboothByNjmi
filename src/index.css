@@ -1,27 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700&display=swap');
 
 :root {
-  --bg-color: #0d0d0d;
-  --surface-color: #1a1a1a;
+  /* Vibrant Glass Theme */
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* Aurora style */
+  --bg-gradient-alt: linear-gradient(-225deg, #ACBB78 0%, #799F0C 100%);
+  /* Sophisticated Soft Gradient */
+  --bg-color: #f0f2f5;
+  --surface-color: rgba(255, 255, 255, 0.7);
+  /* Translucent */
   --primary-color: #7c4dff;
-  /* Deep Purple */
   --accent-color: #00e5ff;
-  /* Cyan */
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --border-color: rgba(255, 255, 255, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-blur: blur(12px);
 
-  --border-radius: 16px;
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --border-radius: 20px;
+  --shadow-lg: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 
   font-family: 'Inter', sans-serif;
   line-height: 1.5;
   color: var(--text-primary);
-  background-color: var(--bg-color);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -30,7 +31,13 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: radial-gradient(circle at top right, #1e1e2f, var(--bg-color));
+  /* Premium Vibrant Background */
+  background:
+    radial-gradient(at 0% 0%, rgba(124, 77, 255, 0.15) 0, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(0, 229, 255, 0.1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 77, 124, 0.1) 0, transparent 50%),
+    #ffffff;
+  background-attachment: fixed;
 }
 
 #root {
@@ -45,9 +52,7 @@ h1 {
   font-family: 'Outfit', sans-serif;
   font-size: 3.2em;
   line-height: 1.1;
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
   margin-bottom: 2rem;
   letter-spacing: -0.02em;
 }
@@ -71,8 +76,9 @@ h1 {
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  /* Softer than pure black */
+  border: 1px solid var(--border-color);
 }
 
 .camera-feed {
@@ -87,7 +93,8 @@ h1 {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 4px solid var(--text-primary);
+  border: 4px solid var(--primary-color);
+  /* Colorful instead of near-black */
   background: transparent;
   cursor: pointer;
   padding: 4px;
@@ -104,7 +111,8 @@ h1 {
 .shutter-inner {
   width: 100%;
   height: 100%;
-  background: var(--text-primary);
+  background: var(--primary-color);
+  /* More vibrant, less striking than black */
   border-radius: 50%;
   transition: transform 0.1s;
 }
@@ -171,6 +179,15 @@ h1 {
 
 @media (min-width: 900px) {
   .app-layout {
+    grid-template-columns: 1fr 1fr;
+    /* Equal split for better balance? Or kept 1.5 1. */
+    grid-template-columns: 1.5fr auto;
+    /* Main content takes space, sidebar fits content? No, user wants bg to fit grid. */
+    /* If sidebar is auto, it might be too small? 
+       Actually, if we want sidebar BG to fit grid, sidebar should probably be `display: inline-block` or `width: fit-content`?
+       But it's a grid item. 
+       Let's try changing columns to standard 1fr 1fr and letting sidebar content dictate width?
+    */
     grid-template-columns: 1.5fr 1fr;
     text-align: left;
   }
@@ -183,16 +200,108 @@ h1 {
 }
 
 .preview-sidebar {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-color);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 80vh;
+  flex-direction: column;
+  /* Stack children (strip + share bar) vertically */
+  justify-content: flex-start;
+  align-items: center;
+  /* Removed min-height: 80vh to let it fit content */
+  height: fit-content;
+  align-self: start;
+  box-shadow: var(--shadow-lg);
+  /* So it doesn't stretch to full height of grid row */
 }
 
 .strip-preview-container {
-  position: sticky;
-  top: 1rem;
+  /* top: 3rem; Removed unused property */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Start from top, center horizontally */
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-layout {
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    margin-bottom: 1rem;
+  }
+
+  .main-content {
+    gap: 1rem;
+  }
+
+  .camera-container {
+    gap: 1rem;
+  }
+
+  .video-wrapper {
+    border-radius: 12px;
+  }
+
+  .preview-sidebar {
+    padding: 0.5rem;
+  }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  border-color: var(--primary-color);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Fix for Branding colors to use variables */
+.brand-main-title {
+  color: var(--text-primary) !important;
+}
+
+.brand-sub-title {
+  color: var(--text-secondary) !important;
+}
+
+/* Ensure Controls and Sidebar use variables correctly */
+.controls-panel,
+.preview-sidebar {
+  border-color: var(--border-color);
 }

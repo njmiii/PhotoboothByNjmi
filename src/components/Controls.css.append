@@ -1,0 +1,44 @@
+/* Existing styles... */
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.layout-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 60px;
+    color: var(--text-primary);
+}
+
+.layout-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.layout-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.layout-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.layout-label {
+    font-size: 0.7rem;
+    font-family: inherit;
+    text-transform: uppercase;
+    opacity: 0.8;
+}

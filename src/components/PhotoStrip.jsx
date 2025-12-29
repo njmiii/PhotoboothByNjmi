@@ -1,14 +1,14 @@
 import { forwardRef } from 'react';
 import './PhotoStrip.css';
 
-const PhotoStrip = forwardRef(({ photos, filter, borderColor, onRemovePhoto }, ref) => {
+const PhotoStrip = forwardRef(({ photos, filter, borderColor, onRemovePhoto, layout = '1-col', textColor = '#000000' }, ref) => {
     if (photos.length === 0) {
         return (
-            <div className="empty-strip">
+            <div className={`empty-strip layout-${layout}`}>
                 <div className="empty-slot"></div>
                 <div className="empty-slot"></div>
                 <div className="empty-slot"></div>
-                <p>Ready to snap!</p>
+                <p style={{ color: textColor }}>Ready to snap!</p>
             </div>
         );
     }
@@ -16,14 +16,10 @@ const PhotoStrip = forwardRef(({ photos, filter, borderColor, onRemovePhoto }, r
     return (
         <div
             ref={ref}
-            className="photo-strip"
-            style={{ backgroundColor: borderColor }}
+            className={`photo-strip layout-${layout}`}
+            style={{ backgroundColor: borderColor, color: textColor }}
         >
-            <div className="strip-branding">
-                <span className="brand-text">PHOTOBOOTH</span>
-            </div>
-
-            <div className="photos-container">
+            <div className={`photos-container layout-${layout}`}>
                 {photos.map((photo, index) => (
                     <div key={index} className="photo-frame">
                         <img
@@ -44,9 +40,15 @@ const PhotoStrip = forwardRef(({ photos, filter, borderColor, onRemovePhoto }, r
                 ))}
             </div>
 
+       
+
             <div className="strip-footer">
                 <span className="date-text">{new Date().toLocaleDateString()}</span>
                 <span className="time-text">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+            </div>
+                 <div className="strip-branding">
+                <div className="brand-main">PHOTOBOOTH</div>
+                <div className="brand-sub">by Njmi</div>
             </div>
         </div>
     );

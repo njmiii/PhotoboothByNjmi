@@ -1,11 +1,16 @@
 import { useRef, useEffect, useState } from 'react';
 
 const FILTER_STYLES = {
+  none: 'none',
   sepia: 'sepia(0.8) contrast(1.2)',
   grayscale: 'grayscale(1) contrast(1.1)',
   vintage: 'sepia(0.4) contrast(1.2) brightness(0.9) saturate(1.2)',
   invert: 'invert(0.1) contrast(1.2)',
-  none: 'none'
+  vivid: 'saturate(1.6) contrast(1.2) brightness(1.05)',
+  noir: 'grayscale(0.5) contrast(1.5) brightness(0.9)',
+  cool: 'saturate(1.1) contrast(1.1) hue-rotate(30deg) brightness(1.1)',
+  warm: 'sepia(0.3) saturate(1.3) contrast(1.1) brightness(1.1)',
+  cyber: 'saturate(1.8) contrast(1.2) hue-rotate(190deg) brightness(1.1)'
 };
 
 const CameraView = ({ onCapture, filter = 'none' }) => {
@@ -59,9 +64,30 @@ const CameraView = ({ onCapture, filter = 'none' }) => {
     setFlash(true);
     setTimeout(() => setFlash(false), 200);
 
+    const video = videoRef.current;
+
+    // Calculate crop for 4:3 aspect ratio
+    const videoAspect = video.videoWidth / video.videoHeight;
+    const targetAspect = 4 / 3;
+
+    let renderWidth = video.videoWidth;
+    let renderHeight = video.videoHeight;
+    let startX = 0;
+    let startY = 0;
+
+    if (videoAspect > targetAspect) {
+      // Video is wider than 4:3 (e.g. 16:9) - Crop sides
+      renderWidth = video.videoHeight * targetAspect;
+      startX = (video.videoWidth - renderWidth) / 2;
+    } else {
+      // Video is taller than 4:3 - Crop top/bottom
+      renderHeight = video.videoWidth / targetAspect;
+      startY = (video.videoHeight - renderHeight) / 2;
+    }
+
     const canvas = document.createElement('canvas');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
+    canvas.width = renderWidth;
+    canvas.height = renderHeight;
     const ctx = canvas.getContext('2d');
 
     // Flip horizontally if using user-facing camera (mirror effect)
@@ -71,7 +97,8 @@ const CameraView = ({ onCapture, filter = 'none' }) => {
     // Apply filter to context
     ctx.filter = FILTER_STYLES[filter] || 'none';
 
-    ctx.drawImage(videoRef.current, 0, 0);
+    // Draw cropped image
+    ctx.drawImage(video, startX, startY, renderWidth, renderHeight, 0, 0, renderWidth, renderHeight);
 
     const dataUrl = canvas.toDataURL('image/png');
     onCapture(dataUrl);

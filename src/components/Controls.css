@@ -1,12 +1,16 @@
 .controls-panel {
     background: var(--surface-color);
-    padding: 2rem;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 2.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
     text-align: left;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .control-group h3 {
@@ -45,27 +49,38 @@
     font-weight: 600;
 }
 
+.style-controls {
+    display: flex;
+    gap: 1rem;
+}
+
 .color-picker-wrapper {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.color-picker-wrapper label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .color-input {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: none;
     background: none;
     cursor: pointer;
     padding: 0;
-}
-
-.color-value {
-    font-family: monospace;
-    color: var(--text-secondary);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .actions-group {
@@ -105,8 +120,8 @@
 }
 
 .action-btn.secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(124, 124, 124, 0.1);
+    color: rgb(138, 137, 137);
 }
 
 .action-btn.danger {
@@ -117,4 +132,82 @@
 
 .action-btn.danger:hover:not(:disabled) {
     background: rgba(255, 82, 82, 0.1);
+}
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.layout-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 60px;
+    color: var(--text-primary);
+}
+
+.layout-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.layout-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.layout-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.layout-label {
+    font-size: 0.7rem;
+    font-family: inherit;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.action-btn.share {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+}
+
+.action-btn.share:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
+}
+
+@media (max-width: 600px) {
+    .controls-panel {
+        padding: 1.25rem;
+        gap: 1.5rem;
+    }
+
+    .layout-grid {
+        grid-template-columns: repeat(4, 1fr);
+        /* Keep 4 col but smaller gap? Or 2x2 */
+        /* Actually 4 col might be too squeezed on 320px. Let's do 4 but ensure min width handled? */
+        /* Let's try flexible wrapping */
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+
+    .filter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    }
+
+    .action-btn {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
 }
